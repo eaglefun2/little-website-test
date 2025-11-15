@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>little test page</title>
+	<link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Main page</a></li>
+                <li><a href="tic-tac-toe.html" aria-current="page">Tic Tac Toe</a></li>
+                <li><a href="#">Item 3</a></li>
+                <li><a href="#">Item 4</a></li>
+                <li><a href="#">Item 5</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="page">
+        <h1>tic tac toes</h1>
+        <hr>
+        <p>this is the tic tac toe page where you play tic tac toe</p>
+        <div id="board">
+            <p id="turn-text">X's turn</p>
+            <button class="cell" id="cell-0"></button>
+            <button class="cell" id="cell-1"></button>
+            <button class="cell" id="cell-2"></button><br>
+            <button class="cell" id="cell-3"></button>
+            <button class="cell" id="cell-4"></button>
+            <button class="cell" id="cell-5"></button><br>
+            <button class="cell" id="cell-6"></button>
+            <button class="cell" id="cell-7"></button>
+            <button class="cell" id="cell-8"></button><br>
+        </div>
+        <script>
+            // tic tac toe game code
+            const cells = document.querySelectorAll('.cell');
+            const turnText = document.getElementById('turn-text');
+
+            let currentPlayer = 'X';
+            let board = ['', '', '', '', '', '', '', '', ''];
+            let gameActive = true;
+            // make the buttons actually button
+            function handleCellClick(event) {
+                const clickedCell = event.target;
+                // if cell is full or game off then ignore
+                const clickedCellIndex = Array.from(cells).indexOf(clickedCell);
+                if (board[clickedCellIndex] !== '' || !gameActive) {
+                    return;
+                }
+                board[clickedCellIndex] = currentPlayer;
+                clickedCell.textContent = currentPlayer;
+                checkResult();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                turnText.textContent = `${currentPlayer}'s turn`;
+            }
+            function checkResult() {
+                const winningConditions = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+                let roundWon = false;
+                for (let i = 0; i < winningConditions.length; i++) {
+                    const [a, b, c] = winningConditions[i];
+                    // cells are empty? if not skip
+                    if (board[a] === '' || board[b] === '' || board[c] === '') {
+                        continue;
+                    }
+                    // cells are same symbol? if so game won
+                    if (board[a] === board[b] && board[b] === board[c]) {
+                        roundWon = true;
+                        break;
+                    }
+                }
+                // popups
+                if (roundWon) {
+                    alert(`Player ${currentPlayer} wins!`);
+                    gameActive = false;
+                    return;
+                }
+                if (!board.includes('')) {
+                    alert('Game ended in a draw!');
+                    gameActive = false;
+                    return;
+                }
+            }
+            cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        </script>
+    </div>
+</body>
+</html>
