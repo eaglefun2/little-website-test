@@ -155,8 +155,28 @@ input[type="radio"]:checked {
     color: var(--text-light);
     cursor: pointer;
     user-select: none;
+    z-index: 200;   
     border: 2px solid var(--main-color);
     transition: background-color .18s ease-in-out;
+}
+.select p:hover {
+    background-color: var(--hover-dark);
+}
+.select #arrow {
+    display: block;
+    color: transparent;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: transparent;
+    border: none;
+    text-align: right;
+    pointer-events: none;
+    z-index: 2;
+    transition: color .18s ease-in-out;
+}
+.select:hover #arrow {
+    color: var(--text-light);
 }
 /* format of the list*/
 .select ul {
@@ -191,7 +211,14 @@ input[type="radio"]:checked {
     background-color: var(--hover-dark);
     color: var(--text-light);
 }
-/* tic tac toe specific thingyies */
+/* -----tic tac toe specific thingyies */
+#cells {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
+    gap: 0px;
+    justify-content: left;
+}
 .cell {
     width: 80px;
     height: 80px;
@@ -232,3 +259,27 @@ input[type="radio"]:checked {
 }
 /* no more tic tac toes */
 
+select,
+::picker(select) {
+    appearance: base-select;
+    border: inherit;
+}
+* {
+    box-sizing: border-box;
+}
+label {
+  width: fit-content;
+  align-self: center;
+}
+select {
+    flex: 1;
+    border: 2px solid var(--main-color);
+    border-radius: 0px;
+    background: var(--background-color);
+    color: var(--main-color);
+    padding: 10px;
+    transition: 0.4s;
+}
+select button {
+    color: var(--main-color);
+}
